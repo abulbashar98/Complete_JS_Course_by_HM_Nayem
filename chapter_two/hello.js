@@ -1,0 +1,8 @@
+console.log('Hello World')
+console.log('Grit')
+console.log('45')
+console.log('she is' + 9)
+console.log(45 + 45)
+console.log('9' + 9)
+console.log(56.54)
+console.log('my fav no: ' + 9)
