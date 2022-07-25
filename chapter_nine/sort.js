@@ -135,4 +135,4 @@ var everyRes = arr.every(function (value) {
     return value > 0;
 })
 
-console.log(everyRes); //=====> true
+console.log(everyRes); //=====> true 
