@@ -167,7 +167,7 @@ index.js:99 My Height is 54
 /** Note:
  * 1. Because of the absence of Class in Javascript we can use 2
  *    different template patterns to create object.
- * 2. To maintain a Naming Convention of Constructor, we should 
+ * 2. To maintain a Naming Convention of Constructor, we should
  *    always declare a Constructor Using Capital letter... Built
  *    in Example: (Array, Object, String, Number)
  */
@@ -223,7 +223,7 @@ My Height is 69
 
 // 2. Constructor Pattern
 
-
+/*
 var Rectangle = function (width, height) {
 
     this.width = width
@@ -242,6 +242,7 @@ var Rectangle = function (width, height) {
     }
 
 }
+*/
 
 // var rect3 = Rectangle(50, 57);
 // rect3.draw();
@@ -298,7 +299,7 @@ Rectangle {width: 47, height: 38, draw: ƒ, printProperties: ƒ}
 // new keyword implementation:
 // We cannot implement a shorthand structure in JS. So that we
 // are going to create new as a function
-
+/*
 function myNew(constructor) {
 
     var obj = {}
@@ -308,6 +309,156 @@ function myNew(constructor) {
 
     return obj
 }
+*/
 
-var rect4 = myNew(Rectangle, 45, 30)
-rect4.draw();
+// var rect4 = myNew(Rectangle, 45, 30)
+// rect4.draw();
+
+
+
+//** Constructor Property Constructor Function and  Object in JS **//
+
+// Constructor Property Definition : Every Object in JS has a
+// constructor property. Constructor property of an object is a
+// reference of some kind of Function patters or Built in Function
+// that was in use to Construct that Particular Object.
+
+
+// We can use Console of Chrome to check few object Constructors
+
+// Example 1:
+/*
+var Rectangle = function (width, height) {
+
+    this.width = width
+    this.height = height
+
+
+    this.draw = function () {
+        console.log("I am a rectangle")
+        this.printProperties()
+    }
+
+    this.printProperties = function () {
+        console.log("My width is " + this.width);
+        console.log("My Height is " + this.height);
+        console.log(this)
+    }
+
+}
+*/
+/*
+var rect1 = new Rectangle(25, 35)
+
+// chrome console
+rect1.constructor
+*/
+/*=====>
+ƒ (width, height) {
+
+    this.width = width
+    this.height = height
+
+
+    this.draw = function () {
+        console.log("I am a rectangle")
+        this.printProperties()
+    }
+
+    this.pr…
+*/
+
+
+
+// Example 2: 
+/*
+var createRect = function (width, height) {
+    return {
+
+        // data
+        width: width,
+        height: height,
+
+        // methods
+        draw: function () {
+            console.log("I am a rectangle")
+            this.printProperties()
+        },
+
+        printProperties: function () {
+            console.log("My width is " + this.width);
+            console.log("My Height is " + this.height);
+            console.log(this)
+
+        }
+
+    }
+}
+*/
+
+/*
+var rect2 = createRect(25, 20)
+
+// chrome console
+rect2.constructor
+*/
+//=====> ƒ Object() { [native code] }
+
+// Notice: the constructor of rect2 is built in Constructor of object
+//         with a capital later. (Object).   Built in Code or Native
+//         code means the Built in process applied that usually
+//         applies when we declare object literal.
+
+// means: both of these are same
+
+var obj = {}
+var obj = new Object()
+
+// chrome console
+obj.constructor
+
+//=====> ƒ Object() { [native code] }
+
+
+// Note: We can also Use constructor property and pattern to
+//       Get the function reference of other Built in Constructors
+
+// Example : string constructor
+
+var str = String('str');
+
+// chrome console
+str.constructor
+//====> ƒ String() { [native code] }
+
+console.log(str);
+//====> str
+
+
+// Notice: when we add new to Built in Constructor, data structure
+//         of str will change...  
+
+var str2 = new String('str')
+
+str.constructor
+//====> ƒ String() { [native code] }
+
+// chrome console
+console.log(str2);
+/*====>
+String {'str'}
+0: "s"
+1: "t"
+2: "r"
+length: 3
+[[Prototype]]: String
+[[PrimitiveValue]]: "str"
+*/
+
+
+// But still valid as a String.
+
+console.log('My array like data structure of str2 object has string fundamentals, see this  ' + str2)
+
+//===> My array like data structure of str2 object has string fundamentals, see this  str
+
