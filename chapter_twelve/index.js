@@ -55,6 +55,9 @@ My Height is 120px
 
 
 
+
+
+
 //******** this keyword execution *****//
 
 /** Note:
@@ -73,7 +76,7 @@ My Height is 120px
 // 2. this is available everywhere in JS.  Inside of a independent
 //    function associates window object, we can associate with an
 //    empty object using new keyword
-// 3. this will always execute the final values it can detect.
+// 3. this will always execute the final values it can detect .
 
 
 
@@ -81,7 +84,7 @@ My Height is 120px
 
 
 // Example based on 1
-
+/*
 var rectangle = {
 
     // data
@@ -102,7 +105,7 @@ var rectangle = {
     }
 
 }
-
+*/
 
 // rectangle.draw();
 /*=====>
@@ -114,17 +117,17 @@ My Height is 100px
 
 
 // Example based on 2
-
+/*
 function myFunction() {
     console.log(this);
 }
-
+*/
 // myFunction()
 
 //===> Window {window: Window, self: Window, document: document, name: '', location: Location, …}
 
 
-new myFunction();
+// new myFunction();
 
 //======> myFunction {}
 
@@ -133,14 +136,15 @@ new myFunction();
 
 
 // Example Based on 3
-
+/*
 var anotherRect = {
     height: 54,
     width: 40,
     printRect: rectangle.printProperties
 }
+*/
 
-anotherRect.printRect()
+// anotherRect.printRect()
 /*====>
 My width is 40
 index.js:99 My Height is 54
@@ -158,6 +162,152 @@ index.js:99 My Height is 54
 
 
 
+//******** Patters to Construct Object *****//
+
+/** Note:
+ * 1. Because of the absence of Class in Javascript we can use 2
+ *    different template patterns to create object.
+ * 2. To maintain a Naming Convention of Constructor, we should 
+ *    always declare a Constructor Using Capital letter... Built
+ *    in Example: (Array, Object, String, Number)
+ */
+
+
+// 1. Factory Pattern
+/*
+var createRect = function (width, height) {
+    return {
+
+        // data
+        width: width,
+        height: height,
+
+        // methods
+        draw: function () {
+            console.log("I am a rectangle")
+            this.printProperties()
+        },
+
+        printProperties: function () {
+            console.log("My width is " + this.width);
+            console.log("My Height is " + this.height);
+            console.log(this)
+
+        }
+
+    }
+}
+*/
+
+
+// var rect1 = createRect(40, 49);
+// rect1.draw()
+/*======>
+I am a rectangle
+My width is 40
+My Height is 49
+{width: 40, height: 49, draw: ƒ, printProperties: ƒ}
+*/
+
+// var rect2 = createRect(84, 69);
+// rect2.draw()
+/*======>
+I am a rectangle
+My width is 84
+My Height is 69
+{width: 84, height: 69, draw: ƒ, printProperties: ƒ}
+*/
 
 
 
+
+// 2. Constructor Pattern
+
+
+var Rectangle = function (width, height) {
+
+    this.width = width
+    this.height = height
+
+
+    this.draw = function () {
+        console.log("I am a rectangle")
+        this.printProperties()
+    }
+
+    this.printProperties = function () {
+        console.log("My width is " + this.width);
+        console.log("My Height is " + this.height);
+        console.log(this)
+    }
+
+}
+
+// var rect3 = Rectangle(50, 57);
+// rect3.draw();
+
+//===> Cannot read properties of undefined (reading 'draw')
+
+// Notice: we have used Naming Convention of Constructor Pattern,
+//        also we have used this.property to create Constructor,
+//        though because of this. is not inside an Object.. it is
+//        going to refer window Object, which does not associate
+//        with draw or printProperties method .    To solve
+//        this problem we can use new keyword to Create an empty
+//        object inside Constructor 1st of all, and also assign
+//        properties using this. to that empty Object {}.
+
+// Proof:
+
+// var rect4 = new Rectangle(47, 38);
+// rect4.draw();
+
+/*=====>
+I am a rectangle
+My width is 47
+My Height is 38
+Rectangle {width: 47, height: 38, draw: ƒ, printProperties: ƒ}
+*/
+
+
+
+
+
+//******** new keyword functionalities and implementation *****//
+
+/** Note:
+ *  1. We do not have enough knowledge to understand the whole
+ *     execution and implementation idea of new yet.
+ *  2. Just going to see this and make important notes. Then we
+ *     would come back after realizing all those facts.
+ *
+ */
+
+
+/** Four massive functionalities of new keyword :
+ * 1. Creates an empty object, for this to bind with.. we have known
+ *    before this. without any object binds with window object.
+ * 2. 2nd functionality is what we have mentioned just now, binds
+ *    this. and constructor function arguments with empty object.
+ * 3. 3rd it inherits the constructor function prototypes in empty
+ *    object, just copy and paste.
+ * 4. Returns the empty Object.
+ */
+
+
+// new keyword implementation:
+// We cannot implement a shorthand structure in JS. So that we
+// are going to create new as a function
+
+function myNew(constructor) {
+
+    var obj = {}
+    Object.setPrototypeOf(obj, constructor.prototype)
+    var argsArray = Array.prototype.slice.apply(arguments)
+    constructor.apply(obj, argsArray.slice(1))
+
+    return obj
+}
+
+var rect4 = myNew(Rectangle, 45, 30)
+rect4.draw();
