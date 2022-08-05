@@ -676,6 +676,8 @@ boundedFunc2()
  * 1. One significant difference between Primitive and Object data
  *    type in Js is, Primitive data is passed by value and Object
  *    data type is passed by reference.
+ * 2. Primitive data is Immutable, and Object data is generally
+ *    mutable in Js
 */
 
 // Pass by Value: pass by value means, when we pass the data in
