@@ -628,7 +628,7 @@ myFunc.apply({ a: 10, b: 15 }, [5, 13])
  43
 */
 
-
+/*
 // Bind : Because we are going to invoke the function instantly we
 //        just bind the Object when we call bind method, then store
 //        bounded object and function as a function in a variable
@@ -645,26 +645,92 @@ function myFunc(c, d) {
 var boundedFunc = myFunc.bind({ a: 10, b: 15 })
 
 boundedFunc(15, 18)
-
+*/
 /*====>
  {a: 10, b: 15}
  58
 */
 
-boundedFunc(150, 118)
-
+// boundedFunc(150, 118)
 /*====>
  {a: 10, b: 15}
  293
 */
 
+/*
 // we can also execute bind like call function parameters
 
 var boundedFunc2 = myFunc.bind({ a: 10, b: 15 }, 12, 13)
 
 boundedFunc2()
-
+*/
 /*====>
  {a: 10, b: 15}
  50
+*/
+
+
+//******** Pass by Value or Pass by Reference *****//
+
+/** NOTE:
+ * 1. One significant difference between Primitive and Object data
+ *    type in Js is, Primitive data is passed by value and Object
+ *    data type is passed by reference.
+*/
+
+// Pass by Value: pass by value means, when we pass the data in
+//                a function as argument we only pass the value of
+//                that data, function creates a clone for that value,
+//                in more simple terms the memory space or any kind
+//                of reference does not pass through to change that
+//                actual data in memory space.
+
+/*
+// Example : Primitive passes by value
+
+var b = 'bashar';
+
+function changeB(b) {
+    b = b + ' ' + 'mim'
+    console.log(b)
+}
+
+changeB(b);
+//=====> bashar mim
+
+// actual data
+console.log(b);
+//=====> bashar
+*/
+
+
+/*
+// pass by reference: pass by reference means when we pass data in
+//                    a function we pass a reference/identification
+//                    number to detect that Object in memory and
+//                    change the actual data... not a clone
+
+
+// Example: Object Data type passes by Reference
+
+
+var obj = {
+    a: 10,
+    b: 20
+}
+
+
+function changeObj(obj) {
+    obj.a = obj.a + 50
+    obj.b += 50
+    console.log(obj)
+}
+
+changeObj(obj)
+//====> {a: 60, b: 70}
+
+// actual data
+console.log(obj)
+//====> {a: 60, b: 70}
+
 */
