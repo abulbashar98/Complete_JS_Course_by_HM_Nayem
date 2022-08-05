@@ -7,6 +7,8 @@
 
 var arr = [34, 65, 44, 3, 57, 3, 25, , 7, 55, 23, 66, 78, 45, 77, 89, 33]
 
+arr.find(3);
+
 var find = 3;
 var isFound = false;
 

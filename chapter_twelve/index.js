@@ -251,7 +251,7 @@ var Rectangle = function (width, height) {
 
 // Notice: we have used Naming Convention of Constructor Pattern,
 //        also we have used this.property to create Constructor,
-//        though because of this. is not inside an Object.. it is
+//        although because of this. is not inside an Object.. it is
 //        going to refer window Object, which does not associate
 //        with draw or printProperties method .    To solve
 //        this problem we can use new keyword to Create an empty
@@ -320,7 +320,7 @@ function myNew(constructor) {
 
 // Constructor Property Definition : Every Object in JS has a
 // constructor property. Constructor property of an object is a
-// reference of some kind of Function patters or Built in Function
+// reference of some kind of Function pattern or Built in Function
 // that was in use to Construct that Particular Object.
 
 
@@ -370,7 +370,7 @@ rect1.constructor
 
 
 
-// Example 2: 
+// Example 2:
 /*
 var createRect = function (width, height) {
     return {
@@ -410,7 +410,7 @@ rect2.constructor
 //         applies when we declare object literal.
 
 // means: both of these are same
-
+/*
 var obj = {}
 var obj = new Object()
 
@@ -418,13 +418,15 @@ var obj = new Object()
 obj.constructor
 
 //=====> ƒ Object() { [native code] }
+*/
+
 
 
 // Note: We can also Use constructor property and pattern to
 //       Get the function reference of other Built in Constructors
 
 // Example : string constructor
-
+/*
 var str = String('str');
 
 // chrome console
@@ -433,11 +435,12 @@ str.constructor
 
 console.log(str);
 //====> str
+*/
 
 
 // Notice: when we add new to Built in Constructor, data structure
-//         of str will change...  
-
+//         of str will change...
+/*
 var str2 = new String('str')
 
 str.constructor
@@ -445,6 +448,8 @@ str.constructor
 
 // chrome console
 console.log(str2);
+*/
+
 /*====>
 String {'str'}
 0: "s"
@@ -458,7 +463,208 @@ length: 3
 
 // But still valid as a String.
 
-console.log('My array like data structure of str2 object has string fundamentals, see this  ' + str2)
+// console.log('My array like data structure of str2 object has string fundamentals, see this  ' + str2)
 
 //===> My array like data structure of str2 object has string fundamentals, see this  str
 
+
+
+
+//******** Functions Are Object in JS *****//
+
+
+// Function : Function in JS is a Special type of Object. That is
+//           executable, can store data or method like an Object,
+//          can possess all the Object features.
+
+
+/** Proofs that Functions are Object:
+ * 1. Proof 1, function has constructor property. Only an Object
+ *    consists constructor property
+ * 2. We can create a function using constructor pattern with new
+ *    key word and built in Constructor for function.
+ * 3. Proof 3, we can access a lot of properties using dot notation
+ */
+
+
+// Proof 1 execution:
+/*
+function test() {
+    console.log('something');
+}
+
+// chrome console
+typeof (test)
+//======> 'function'
+
+test.constructor
+//======> ƒ Function() { [native code] }
+*/
+
+
+// Proof 2 execution:
+/*
+var Rect = new Function('width', 'height', `this.width = width
+this.height = height
+
+this.draw = function () {
+    console.log("I am a rectangle")
+    this.printProperties()
+}
+
+this.printProperties = function () {
+    console.log("My width is " + this.width);
+    console.log("My Height is " + this.height);
+    console.log(this)
+}`)
+
+const rect7 = new Rect(14, 10)
+*/
+
+// chrome console
+
+// rect7
+/*=====>
+{width: 14, height: 10, draw: ƒ, printProperties: ƒ}
+draw: ƒ ()
+height: 10
+printProperties: ƒ ()
+width: 14
+[[Prototype]]: Object
+*/
+
+// rect7.draw()
+/*=====>
+I am a rectangle
+My width is 14
+My Height is 10
+{width: 14, height: 10, draw: ƒ, printProperties: ƒ}
+*/
+
+// Notice: how we have created a function using Constructor Pattern
+
+
+
+// Proof 3 execution:
+/*
+function test() {
+    console.log('something');
+}
+
+// chrome console
+
+console.log(test.name, test.length)
+*/
+
+
+
+//******** Understanding Bind, Call, Apply *****//
+
+
+// What Bind Call Apply does???
+
+/** Ans 1: (Call and Apply)
+ *    When we invoke a function generally {function()}, it's
+ *    execution context is window object, means when we use this
+ *    inside a normal function, this. associates properties with
+ *    window Object, But when we invoke the function using call or
+ *    apply we can give an object as execution context for this.
+ *
+ *  Ans 2: Bind Special
+ *    Bind has one special feature in addition to adding object
+ *    as  execution context, When we invoke a function generally
+ *    {function()}, that function executes instantly. Also when
+ *    we invoke using Call or Apply. But with Bind method we
+ *    can bind object instantly, and store bounded function and
+ *    object in a variable, then can invoke that variable
+ *    function later anywhere
+ */
+
+
+// 1  Call and 2. Apply
+
+/*
+function myFunc() {
+    console.log(this)
+    console.log(this.a + this.b)
+}
+
+myFunc()
+*/
+/*=====>
+Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+NaN
+  */
+
+
+// Call
+/*
+function myFunc(c, d) {
+    console.log(this)
+    console.log(this.a + this.b + c + d)
+}
+
+myFunc.call({ a: 10, b: 15 }, 5, 13)
+*/
+/*====>
+ {a: 10, b: 15}
+ 43
+*/
+
+
+// Apply, difference is when we give function parameters in apply
+// function we will have to give them in an Array..
+
+/*
+function myFunc(c, d) {
+    console.log(this)
+    console.log(this.a + this.b + c + d)
+}
+
+myFunc.apply({ a: 10, b: 15 }, [5, 13])
+*/
+/*====>
+ {a: 10, b: 15}
+ 43
+*/
+
+
+// Bind : Because we are going to invoke the function instantly we
+//        just bind the Object when we call bind method, then store
+//        bounded object and function as a function in a variable
+//        later when we call the function variable we pass on
+//        function arguments variable. In that way the function
+//        becomes a dynamic one for same execution context
+
+
+function myFunc(c, d) {
+    console.log(this)
+    console.log(this.a + this.b + c + d)
+}
+
+var boundedFunc = myFunc.bind({ a: 10, b: 15 })
+
+boundedFunc(15, 18)
+
+/*====>
+ {a: 10, b: 15}
+ 58
+*/
+
+boundedFunc(150, 118)
+
+/*====>
+ {a: 10, b: 15}
+ 293
+*/
+
+// we can also execute bind like call function parameters
+
+var boundedFunc2 = myFunc.bind({ a: 10, b: 15 }, 12, 13)
+
+boundedFunc2()
+
+/*====>
+ {a: 10, b: 15}
+ 50
+*/
