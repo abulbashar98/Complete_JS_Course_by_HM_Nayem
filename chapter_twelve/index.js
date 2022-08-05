@@ -741,7 +741,7 @@ console.log(obj)
 //******** Abstraction in JS using Private Properties *****//
 
 
-
+/*
 var Rectangle = function (width, height) {
 
     // var name = 'Abul Bashar'
@@ -767,7 +767,7 @@ var Rectangle = function (width, height) {
 }
 
 var rect5 = new Rectangle(47, 34)
-
+*/
 
 // Example of a private property
 // console.log(rect5.name);
@@ -775,6 +775,7 @@ var rect5 = new Rectangle(47, 34)
 
 
 // rect5.draw()
+// Notice :
 /*=====>
  I am a rectangle
  My width is undefined
@@ -793,11 +794,88 @@ var rect5 = new Rectangle(47, 34)
 
 
 // after binding
-rect5.draw()
-/*=====> 
+// rect5.draw()
+/*=====>
  I am a rectangle
  My width is 47
  My Height is 34
  Rectangle {width: 47, height: 34, draw: ƒ}
  position: x = 45 position: y = 100
 */
+
+
+
+
+/*************************************
+  Getter and Setter in JS to access or change Private Properties 
+                             ***************************************/
+
+
+var Rectangle = function (width, height) {
+
+    this.width = width
+    this.height = height
+    var position = {
+        x: 45,
+        y: 100
+    }
+    var printProperties = function () {
+        console.log("My width is " + this.width);
+        console.log("My Height is " + this.height);
+        console.log(this)
+    }.bind(this)
+
+    // 1.
+    // this.getPosition = function () {
+    //     return position;
+    // }
+
+
+    this.draw = function () {
+        console.log("I am a rectangle")
+        printProperties()
+        console.log('position: x = ' + position.x + ' position: y = ' + position.y)
+    }
+
+    Object.defineProperty(this, 'position', {
+        get: function () {
+            return position
+        },
+        set: function (value) {
+            position = value
+        }
+    })
+
+
+}
+
+var rect5 = new Rectangle(47, 34)
+
+
+// Note : we can see using dot notation that we only have access to
+//        width, height, and draw method in this object. But if we
+//        need to get access of Private properties like position or
+//        printProperties we can use 2 solutions.
+
+// 1.  use another method to get or Set private property
+
+// var position = rect5.getPosition()
+// console.log(position);
+
+
+// 2. Use Getter or Setter Method to define Private Property ***
+//    in this way we can get access like a normal property
+//    still does not suggest with dot notation
+
+
+console.log(rect5.position)
+//====> {x: 45, y: 100}
+
+rect5.position = {
+    x: 25,
+    y: 30
+}
+
+console.log(rect5.position);
+//=====> {x: 25, y: 30}
+
