@@ -736,3 +736,68 @@ console.log(obj)
 //====> {a: 60, b: 70}
 
 */
+
+
+//******** Abstraction in JS using Private Properties *****//
+
+
+
+var Rectangle = function (width, height) {
+
+    // var name = 'Abul Bashar'
+
+    this.width = width
+    this.height = height
+    var position = {
+        x: 45,
+        y: 100
+    }
+    var printProperties = function () {
+        console.log("My width is " + this.width);
+        console.log("My Height is " + this.height);
+        console.log(this)
+    }.bind(this)
+
+    this.draw = function () {
+        console.log("I am a rectangle")
+        printProperties()
+        console.log('position: x = ' + position.x + ' position: y = ' + position.y)
+    }
+
+}
+
+var rect5 = new Rectangle(47, 34)
+
+
+// Example of a private property
+// console.log(rect5.name);
+//====> undefined
+
+
+// rect5.draw()
+/*=====>
+ I am a rectangle
+ My width is undefined
+ My Height is undefined
+ Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+ position: x = 45 position: y = 100
+*/
+
+// this. does not work properly in pintProperties now, because
+// printProperties now is not a part of object and this. asociates
+// with Window Object. to solve this problem >
+// 1. either we can remove this. from console, int that way width,
+//    height will come from function parameters.
+// 2. or else we can bind private printProperties to this Object
+
+
+
+// after binding
+rect5.draw()
+/*=====> 
+ I am a rectangle
+ My width is 47
+ My Height is 34
+ Rectangle {width: 47, height: 34, draw: ƒ}
+ position: x = 45 position: y = 100
+*/
